@@ -4,16 +4,99 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-​
-const OUTPUT_DIR = path.resolve(__dirname, "output")
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-​
+
 const render = require("./lib/htmlRenderer");
+
+const employees = [];
 ​
 ​
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-​
+
+// pathway
+// all
+// name - getName()
+// role - getRole()
+// email - getEmail()
+// id - getId()
+// //
+// //managerDifference
+// officeNumber - getOfficeNumber()
+// //engineerDifference
+// github - getGithub()
+// //internDifference
+// school - getSchool()
+
+
+
+const questions = [
+//what is your name question
+{
+type: "input",
+name: "name",
+message:"What is the employee's name?"
+},
+//what is your role question
+{
+type: "list",
+name: "role",
+message:"What is the employee's role?",
+choices: ["Manager", "Engineer","Intern"],
+},
+//what is your email question
+{
+type: "input",
+name: "email",
+message:"What is the employee's email?"
+},
+//what is your ID question
+{
+type: "input",
+name: "id",
+message:"What is the employee's id number?"
+},
+//what is your office number (***questions for MANAGER***)
+{
+type: "input",
+name: "officeManNum",
+message:"What is the manager's office phone number?",
+when: (response) => response.role === 'Manager'
+},
+//what is your github (***question for ENGINEER***)
+{
+type: "input",
+name: "github",
+message:"What is the engineer's github name?",
+when: (response) => response.role === 'Engineer'
+},
+//what is your school (***question for INTERN***)
+{
+type: "input",
+name: "school",
+message:"What is the intern's school?",
+when: (response) => response.role === 'Intern'
+},
+​]
+
+
+function init() {
+    inquirer.prompt(questions).then
+    (console.log(response))     
+};
+
+
+
+init();
+
+//WHEN EXAMPLE
+//    'type': 'input',
+//    'name': 'url',
+//    'message': 'Enter the URL'
+//    'when': (answers) => answers.databasetype === 'mongoDB'
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
