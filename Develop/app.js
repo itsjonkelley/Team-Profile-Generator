@@ -22,7 +22,8 @@ const employees = [];
 // role - getRole()
 // email - getEmail()
 // id - getId()
-// //
+// 
+
 // //managerDifference
 // officeNumber - getOfficeNumber()
 // //engineerDifference
@@ -61,14 +62,14 @@ message:"What is the employee's id number?"
 //what is your office number (***questions for MANAGER***)
 {
 type: "input",
-name: "officeManNum",
+name: "officeNumber",
 message:"What is the manager's office phone number?",
 when: (response) => response.role === 'Manager'
 },
 //what is your github (***question for ENGINEER***)
 {
 type: "input",
-name: "github",
+name: "githubName",
 message:"What is the engineer's github name?",
 when: (response) => response.role === 'Engineer'
 },
