@@ -30,7 +30,6 @@ const employees = [];
 // school - getSchool()
 
 
-
 const questions = [
 //what is your name question
 {
@@ -78,12 +77,28 @@ name: "school",
 message:"What is the intern's school?",
 when: (response) => response.role === 'Intern'
 },
+{
+type: "confirm",
+name: "addEmployee",
+message:"Do you need to add another employee?"
+},
 ];
+
+// var person = {
+
+
+
 
 
 async function init() {
     let response = await inquirer.prompt(questions);
-    console.log(response)  
+    employees.push(response);
+    console.log(employees);
+    if(response.addEmployee === true) {
+        init()
+    } else{
+        console.log(response)  
+    }
 };
 
 
