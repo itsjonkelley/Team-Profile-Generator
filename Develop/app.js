@@ -11,6 +11,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 const employees = [];
+
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -66,7 +68,7 @@ when: (response) => response.role === 'Manager'
 //what is your github (***question for ENGINEER***)
 {
 type: "input",
-name: "githubName",
+name: "github",
 message:"What is the engineer's github name?",
 when: (response) => response.role === 'Engineer'
 },
@@ -84,22 +86,46 @@ message:"Do you need to add another employee?"
 },
 ];
 
-// var person = {
-
-
-
 
 
 async function init() {
     let response = await inquirer.prompt(questions);
-    employees.push(response);
-    console.log(employees);
+    let newEmployee;
+    switch (response.role) {
+        case 'Manager' : newEmployee = new Manager(response.name, response.email, response.id, response.officeNumber ); break;
+        case 'Engineer' : newEmployee = new Engineer(response.name, response.email, response.id, response.github ); break;
+        case 'Intern' : newEmployee = new Intern(response.name, response.email, response.id, response.school ); break;
+    }
+    employees.push(newEmployee);
     if(response.addEmployee === true) {
         init()
     } else{
-        console.log(response)  
+        writeToFile()
     }
 };
+
+function writeToFile() {
+  
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+        fs.writeFile(outputPath, render(employees), function (error) {
+            if (error) {
+                throw error;
+            }
+        })
+            
+}
+
+
+function completeTeam() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+    }
+    fs.writeFileSync(outputPath, render(dreamTeam), "utf-8")
+    console.log(dreamTeam);
+}
+
+
 
 
 
@@ -109,6 +135,8 @@ async function init() {
 
 
 init();
+
+
 
 //WHEN EXAMPLE
 //    'type': 'input',
